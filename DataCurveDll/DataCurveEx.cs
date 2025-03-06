@@ -969,11 +969,11 @@ namespace UIResource
                 else
                 {
                     axis.SetZoomValue((int)(axis._max_zoom_value * 2));
-                    if (_is_dynamic_curve) // 是否动态曲线
-                    {
-                        ReloadCurveData(_dict_data_items, true);
-                    }
-                    else
+                    // if (_is_dynamic_curve) // 是否动态曲线
+                    // {
+                    //     ReloadCurveData(_dict_data_items, true);
+                    // }
+                    // else
                     {
                         ResetCurveData(_dict_data_items, true);
                     }
@@ -1470,9 +1470,8 @@ namespace UIResource
                 DataItem item = kvp.Value;
                 if (null != item._data && item._data.Length > 0)
                 {
-                    float[] data = item._data.Where((value, index) => index % interval_point == 0).ToArray();
+                    float[] data = item._data.Where((value, index) => index % 2 == 0).ToArray();
                     item._data = data;
-                    item._data_size = (ulong)data.Length;
                 }
             }
         }
