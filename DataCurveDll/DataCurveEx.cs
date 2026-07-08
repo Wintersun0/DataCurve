@@ -994,9 +994,13 @@ namespace UIResource
                     if ((ulong)min_index <= item._data_size && item_chche._data.Length < max_count)
                     {
                         if (0 == item_chche._data_size % (ulong)(interval_point))
+                        {
                             BasicFramework.AddArrayData(ref item_chche._data, new float[] { data }, max_count);
+                        }
+
+                        item_chche._data_size++;
                     }
-                    item_chche._data_size++;
+                    
                     continue;
                 }
 
@@ -1435,7 +1439,22 @@ namespace UIResource
 
             Dictionary<int, List<float>> dict_caches = DataCurveZoomData?.Invoke(min_index, max_index, interval_point);
             if (null == dict_caches || 0 == dict_caches.Count)
+            {
+                foreach (var item in _dict_data_items)
+                {
+                    dict.Add(
+                        item.Key,
+                        new DataItem()
+                        {
+                            _line_thickness = item.Value._line_thickness,
+                            _is_visible = item.Value._is_visible,
+                            _axis_name = item.Value._axis_name,
+                            _data = new float[] { },
+                            _data_size = 0
+                        });
+                }
                 return;
+            }
 
             foreach (var item in _dict_data_items)
             {
